@@ -5,6 +5,9 @@ const employee = require('./src/routes/employee');
 
 
 
+app.use(express.json());
+
+app.use(cors({ credentials: true }));
 app.use('/api', employee);
 
 
