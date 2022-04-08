@@ -1,0 +1,7 @@
+.employee-buttons {
+  display: flex;
+}
+
+.employee-buttons Button {
+  margin: 5px;
+}
