@@ -1,7 +1,5 @@
-const {saveEmployee, selectAll, checkEmployee} = require('../utils/query')
+const {saveEmployee, selectAll, checkEmployee, deleteById} = require('../utils/query')
 const {mysqlPool, query} = require('../utils/connection')
-
-
 
 const registEmployees = async(req,res) => {
     const transaction = await mysqlPool.getConnection();
@@ -14,7 +12,6 @@ const registEmployees = async(req,res) => {
             vacationLeaveCredits,
             hourlyRate
         } = req.body;
-        //res.send('success')
         //to check if the employee has the same id
         const employee = await query(checkEmployee, [req.body.id], transaction)
         if(employee.length > 0){
@@ -34,26 +31,44 @@ const listEmployees = async(req, res) => {
     try{
         //to list all employees
         const list = await query(selectAll, [], transaction)
-        res.json(list)
-        //res.send({code:200, message:'success'})
-    }catch(err){
+        //res.json(list)
+        res.send({code:200})
+    }catch{
         res.send({code:500, message:'erro'})
     }
 }
 
-const deleteById = async(req, res) => {
+const deleteEmployeeById = async(req, res) => {
     const transaction = await mysqlPool.getConnection();
     try{
         const{
-            id
+            id: inputId
         } = req.params
+        //check if there is an employee with this id number
+        
+        const employee = await query(checkEmployee, [inputId], transaction)
+        console.log(employee)
+        if(employee.length > 0){
+            const deleteEmployee = await query(deleteById, [inputId], transaction)
+            res.json({code:200, message:"successfully Deelete"})
+        }else{
+            res.json({code:404, message:'employee not found'})
+        }
+    }catch{
+        res.json({code:500, message:'server Error'})
+    }
+}
+
+const updateEmployee = async(req, res) => {
+    const transaction = await mysqlPool.getConnection();
+    try{
 
     }catch{
-    
+
     }
 }
 module.exports = {
     registEmployees,
     listEmployees,
-    deleteById
+    deleteEmployeeById
 };

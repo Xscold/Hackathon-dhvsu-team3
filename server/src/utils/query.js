@@ -6,10 +6,11 @@ const selectAll = "SELECT * FROM employee"
 
 const checkEmployee = "SELECT * FROM employee where id = ?"
 
-
+const deleteById = "DELETE FROM employee where id = ?"
 
 module.exports = {
     saveEmployee,
     selectAll,
-    checkEmployee
+    checkEmployee,
+    deleteById
 }
