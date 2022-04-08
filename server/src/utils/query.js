@@ -4,7 +4,9 @@ const saveEmployee = "INSERT INTO employee (firstName, lastName, position, sickL
 
 const selectAll = "SELECT * FROM employee"
 
-const checkEmployee = "SELECT * FROM employee "
+const checkEmployee = "SELECT * FROM employee where id = ?"
+
+
 
 module.exports = {
     saveEmployee,
