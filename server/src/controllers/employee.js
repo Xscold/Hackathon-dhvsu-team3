@@ -15,11 +15,11 @@ const registEmployees = async(req,res) => {
         //to check if the employee has the same id
         const employee = await query(checkEmployee, [req.body.id], transaction)
         if(employee.length > 0){
-           res.send(309).json
+           res.sendStatus(309).json
         }else{
             //insert employee into the database
             const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate], transaction)
-            res.status(200).json({insert})
+            res.sendStatus(200).json({insert})
         }
     }catch(err){
         res.json(err.message);
@@ -31,7 +31,7 @@ const listEmployees = async(req, res) => {
     try{
         //to list all employees
         const employee = await query(selectAll, [], transaction)
-        res.status(200).json({employee})
+        res.sendStatus(200).json({employee})
     }catch{
         res.send({code:500, message:'error'})
     }
@@ -49,9 +49,9 @@ const deleteEmployeeById = async(req, res) => {
         console.log(employee)
         if(employee.length > 0){
             const deleteEmployee = await query(deleteById, [inputId], transaction)
-            res.status(200).json()
+            res.sendStatus(200).json()
         }else{
-            res.send(404).json()
+            res.sendStatus(404).json()
         }
     }catch{
         res.json({code:500, message:'server Error'})
@@ -75,9 +75,9 @@ const updateEmployee = async(req, res) => {
         const employee = await query(checkEmployee, [inputId], transaction)
         if(employee.length > 0){
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
-            res.send(200).json({updateEmployee})
+            res.sendStatus(200).json({updateEmployee})
         }else{
-            res.send(404)
+            res.sendStatus(404)
         }
     }catch{
         res.json({code:500, message:'server Error'})
