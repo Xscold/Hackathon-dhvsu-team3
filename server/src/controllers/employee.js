@@ -47,12 +47,12 @@ const deleteEmployeeById = async(req, res) => {
         //check if there is an employee with this id number
         
         const employee = await query(checkEmployee, [inputId], transaction)
-        console.log(employee)
+        //console.log(employee)
         if(employee.length > 0){
             const deleteEmployee = await query(deleteById, [inputId], transaction)
             res.json({employee})
         }else{
-            res.sendStatus(404)
+            res.json(404)
         }
     }catch{
         res.json(err.message);
@@ -76,9 +76,9 @@ const updateEmployee = async(req, res) => {
         const employee = await query(checkEmployee, [inputId], transaction)
         if(employee.length > 0){
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
-            res.send({employee: req.body})
+            res.json({employee: req.body})
         }else{
-            res.send(404)
+            res.json(404)
         }
     }catch{
         res.json(err.message);
@@ -95,7 +95,7 @@ const getEmployeeById = async(req, res) => {
         if(employee.length > 0){
             res.json({employee: employee[0]})
         }else{
-            res.sendStatus(404)
+            res.json(404)
         }
     }catch{
         res.json(err.message);
