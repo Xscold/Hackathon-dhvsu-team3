@@ -34,7 +34,7 @@ const listEmployees = async(req, res) => {
         const employee = await query(selectAll, [], transaction)
         res.json({employee})
     }catch{
-        res.send({code:500, message:'error'})
+        res.json(err.message);
     }
 }
 
@@ -55,7 +55,7 @@ const deleteEmployeeById = async(req, res) => {
             res.sendStatus(404)
         }
     }catch{
-        res.json({code:500, message:'server Error'})
+        res.json(err.message);
     }
 }
 
@@ -81,7 +81,7 @@ const updateEmployee = async(req, res) => {
             res.send(404)
         }
     }catch{
-        res.json({code:500, message:'server Error'})
+        res.json(err.message);
     }
 }
 
@@ -98,7 +98,7 @@ const getEmployeeById = async(req, res) => {
             res.sendStatus(404)
         }
     }catch{
-        res.json({code:501, message:'server Error'})
+        res.json(err.message);
     }
 }
 module.exports = {
