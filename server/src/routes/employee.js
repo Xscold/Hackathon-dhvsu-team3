@@ -13,6 +13,7 @@ router.get('/management/employee/:id', userController.getEmployeeById)
 //payroll calculation Routes
 
 router.post('/management/employee/:id/salary', payroll.salary)
-router.post('/management/employee/:id/timeout', payroll.userTimeIn)
+router.post('/management/employee/:id/timein', payroll.userTimeIn)
+router.post('/management/employee/:id/timeout', payroll.userTimeOut)
 
 module.exports = router;
