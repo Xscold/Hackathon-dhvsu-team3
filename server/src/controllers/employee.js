@@ -15,14 +15,15 @@ const registEmployees = async(req,res) => {
         //to check if the employee has the same id
         const employee = await query(checkEmployee, [req.body.id], transaction)
         if(employee.length > 0){
-           res.send(309).json
+            res.send(404)
         }else{
             //insert employee into the database
-            const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate], transaction)
-            res.status(200).json({insert})
+            const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate],transaction)
+            res.json({employee: req.body})
+            
         }
     }catch(err){
-        res.json(err.message);
+        res.send("error");
     }
 }
 
@@ -31,9 +32,9 @@ const listEmployees = async(req, res) => {
     try{
         //to list all employees
         const employee = await query(selectAll, [], transaction)
-        res.status(200).json({employee})
+        res.json({employee})
     }catch{
-        res.send({code:500, message:'error'})
+        res.send("error");
     }
 }
 
@@ -46,15 +47,15 @@ const deleteEmployeeById = async(req, res) => {
         //check if there is an employee with this id number
         
         const employee = await query(checkEmployee, [inputId], transaction)
-        console.log(employee)
+        //console.log(employee)
         if(employee.length > 0){
             const deleteEmployee = await query(deleteById, [inputId], transaction)
-            res.status(200).json()
+            res.json({employee: employee[0]})
         }else{
-            res.send(404).json()
+            res.send(404)
         }
     }catch{
-        res.json({code:500, message:'server Error'})
+        res.send("error");
     }
 }
 
@@ -72,20 +73,39 @@ const updateEmployee = async(req, res) => {
             vacationLeaveCredits,
             hourlyRate
         } = req.body;
+        console.log(req.body)
         const employee = await query(checkEmployee, [inputId], transaction)
         if(employee.length > 0){
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
-            res.send(200).json({updateEmployee})
+            res.json({employee: req.body})
         }else{
             res.send(404)
         }
     }catch{
-        res.json({code:500, message:'server Error'})
+        res.send("error");
+    }
+}
+
+const getEmployeeById = async(req, res) => {
+    const transaction = await mysqlPool.getConnection();
+    try{
+        const{
+            id 
+        } = req.params
+        const employee = await query(checkEmployee, [id], transaction)
+        if(employee.length > 0){
+            res.json({employee: employee[0]})
+        }else{
+            res.send(404)
+        }
+    }catch{
+        res.send("error");
     }
 }
 module.exports = {
     registEmployees,
     listEmployees,
     deleteEmployeeById,
-    updateEmployee
+    updateEmployee,
+    getEmployeeById
 };

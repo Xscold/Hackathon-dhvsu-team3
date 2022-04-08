@@ -41,7 +41,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'vash','ramos',NULL,3,3,1200),(2,'vash','ramos',NULL,3,3,1200),(3,'vash','ramos',NULL,3,3,1200),(4,'vash','ramos',NULL,3,3,1200);
+INSERT INTO `employee` VALUES (1000,'Gold','doe','Treasurer',5,5,200);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
