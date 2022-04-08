@@ -19,7 +19,7 @@ const registEmployees = async(req,res) => {
         }else{
             //insert employee into the database
             const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate],transaction)
-            res.json({status:200, employee: req.body})
+            res.json({employee: req.body})
             
         }
     }catch(err){
@@ -32,7 +32,7 @@ const listEmployees = async(req, res) => {
     try{
         //to list all employees
         const employee = await query(selectAll, [], transaction)
-        res.json({status:200, employee})
+        res.json({employee})
     }catch{
         res.send("error");
     }
@@ -50,7 +50,7 @@ const deleteEmployeeById = async(req, res) => {
         //console.log(employee)
         if(employee.length > 0){
             const deleteEmployee = await query(deleteById, [inputId], transaction)
-            res.json({status: 200,employee: employee[0]})
+            res.json({employee: employee[0]})
         }else{
             res.send(404)
         }
@@ -73,10 +73,11 @@ const updateEmployee = async(req, res) => {
             vacationLeaveCredits,
             hourlyRate
         } = req.body;
+        console.log(req.body)
         const employee = await query(checkEmployee, [inputId], transaction)
         if(employee.length > 0){
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
-            res.json({status: 200,employee: req.body})
+            res.json({employee: req.body})
         }else{
             res.send(404)
         }
@@ -93,7 +94,7 @@ const getEmployeeById = async(req, res) => {
         } = req.params
         const employee = await query(checkEmployee, [id], transaction)
         if(employee.length > 0){
-            res.json({status: 200, employee: employee[0]})
+            res.json({employee: employee[0]})
         }else{
             res.send(404)
         }
