@@ -15,7 +15,7 @@ const registEmployees = async(req,res) => {
         //to check if the employee has the same id
         const employee = await query(checkEmployee, [req.body.id], transaction)
         if(employee.length > 0){
-           res.sendStatus(309).json
+           res.json({employee})
         }else{
             //insert employee into the database
             const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate], transaction)
@@ -31,7 +31,7 @@ const listEmployees = async(req, res) => {
     try{
         //to list all employees
         const employee = await query(selectAll, [], transaction)
-        res.sendStatus(200).json({employee})
+        res.json({employee})
     }catch{
         res.send({code:500, message:'error'})
     }
@@ -49,9 +49,9 @@ const deleteEmployeeById = async(req, res) => {
         console.log(employee)
         if(employee.length > 0){
             const deleteEmployee = await query(deleteById, [inputId], transaction)
-            res.sendStatus(200).json()
+            res.json({employee})
         }else{
-            res.sendStatus(404).json()
+            res.send(404)
         }
     }catch{
         res.json({code:500, message:'server Error'})
@@ -75,9 +75,9 @@ const updateEmployee = async(req, res) => {
         const employee = await query(checkEmployee, [inputId], transaction)
         if(employee.length > 0){
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
-            res.sendStatus(200).json({updateEmployee})
+            res.send({employee})
         }else{
-            res.sendStatus(404)
+            res.send(404)
         }
     }catch{
         res.json({code:500, message:'server Error'})
