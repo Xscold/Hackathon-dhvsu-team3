@@ -53,7 +53,7 @@ const deleteEmployeeById = async(req, res) => {
         }else{
             res.sendStatus(404)
         }
-    }catch{
+    }catch(err){
         res.send("error");
     }
 }
@@ -80,7 +80,7 @@ const updateEmployee = async(req, res) => {
         }else{
             res.sendStatus(404)
         }
-    }catch{
+    }catch(err){
         res.send("error");
     }
 }
@@ -97,7 +97,7 @@ const getEmployeeById = async(req, res) => {
         }else{
             res.sendStatus(404)
         }
-    }catch{
+    }catch(err){
         res.send("error");
     }
 }
