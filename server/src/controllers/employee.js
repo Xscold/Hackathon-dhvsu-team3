@@ -31,8 +31,7 @@ const listEmployees = async(req, res) => {
     try{
         //to list all employees
         const list = await query(selectAll, [], transaction)
-        //res.json(list)
-        res.send({code:200})
+        res.json(list)
     }catch{
         res.send({code:500, message:'erro'})
     }
@@ -50,7 +49,7 @@ const deleteEmployeeById = async(req, res) => {
         console.log(employee)
         if(employee.length > 0){
             const deleteEmployee = await query(deleteById, [inputId], transaction)
-            res.json({code:200, message:"successfully Deelete"})
+            res.json({code:200, message:"successfully Delete"})
         }else{
             res.json({code:404, message:'employee not found'})
         }
@@ -62,7 +61,10 @@ const deleteEmployeeById = async(req, res) => {
 const updateEmployee = async(req, res) => {
     const transaction = await mysqlPool.getConnection();
     try{
+        const employee = await query(checkEmployee, [inputId], transaction)
+        if(employee.length > 0){
 
+        }
     }catch{
 
     }
