@@ -15,7 +15,7 @@ const registEmployees = async(req,res) => {
         const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate], transaction)
         res.send('success')
         //to check if the employee has the same id
-        const employee = await query(checkEmployee, [id], transaction)
+        const employee = await query(checkEmployee, [], transaction)
         // if(employee.length > 0){
         //    res.send({code:309, message:"Employee has the existing ID"})
         // }else{
