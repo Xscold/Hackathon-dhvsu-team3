@@ -15,7 +15,7 @@ const registEmployees = async(req,res) => {
         //to check if the employee has the same id
         const employee = await query(checkEmployee, [req.body.id], transaction)
         if(employee.length > 0){
-            res.json(309)
+            res.send(309)
         }else{
             //insert employee into the database
             const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate],transaction)
@@ -23,7 +23,7 @@ const registEmployees = async(req,res) => {
             
         }
     }catch(err){
-        res.json(err.message);
+        res.send("error");
     }
 }
 
@@ -34,7 +34,7 @@ const listEmployees = async(req, res) => {
         const employee = await query(selectAll, [], transaction)
         res.json({employee})
     }catch{
-        res.json(err.message);
+        res.send("error");
     }
 }
 
@@ -52,10 +52,10 @@ const deleteEmployeeById = async(req, res) => {
             const deleteEmployee = await query(deleteById, [inputId], transaction)
             res.json({employee})
         }else{
-            res.json(404)
+            res.send(404)
         }
     }catch{
-        res.json(err.message);
+        res.send("error");
     }
 }
 
@@ -78,10 +78,10 @@ const updateEmployee = async(req, res) => {
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
             res.json({employee: req.body})
         }else{
-            res.json(404)
+            res.send(404)
         }
     }catch{
-        res.json(err.message);
+        res.send("error");
     }
 }
 
@@ -95,10 +95,10 @@ const getEmployeeById = async(req, res) => {
         if(employee.length > 0){
             res.json({employee: employee[0]})
         }else{
-            res.json(404)
+            res.send(404)
         }
     }catch{
-        res.json(err.message);
+        res.send("error");
     }
 }
 module.exports = {
