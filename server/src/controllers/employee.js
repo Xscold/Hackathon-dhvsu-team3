@@ -84,9 +84,27 @@ const updateEmployee = async(req, res) => {
         res.json({code:500, message:'server Error'})
     }
 }
+
+const getEmployeeById = async(req, res) => {
+    const transaction = await mysqlPool.getConnection();
+    try{
+        const{
+            id 
+        } = req.params
+        const employee = await query(checkEmployee, [id], transaction)
+        if(employee.length > 0){
+            res.json({employee: employee[0]})
+        }else{
+            res.sendStatus(404)
+        }
+    }catch{
+        res.json({code:501, message:'server Error'})
+    }
+}
 module.exports = {
     registEmployees,
     listEmployees,
     deleteEmployeeById,
-    updateEmployee
+    updateEmployee,
+    getEmployeeById
 };
