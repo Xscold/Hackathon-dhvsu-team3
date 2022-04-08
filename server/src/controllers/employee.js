@@ -15,11 +15,12 @@ const registEmployees = async(req,res) => {
         //to check if the employee has the same id
         const employee = await query(checkEmployee, [req.body.id], transaction)
         if(employee.length > 0){
-           res.json({employee})
+            res.json(309)
         }else{
             //insert employee into the database
-            const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate], transaction)
-            res.sendStatus(200).json({insert})
+            const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate],transaction)
+            res.json({employee: req.body})
+            
         }
     }catch(err){
         res.json(err.message);
@@ -51,7 +52,7 @@ const deleteEmployeeById = async(req, res) => {
             const deleteEmployee = await query(deleteById, [inputId], transaction)
             res.json({employee})
         }else{
-            res.send(404)
+            res.sendStatus(404)
         }
     }catch{
         res.json({code:500, message:'server Error'})
@@ -75,7 +76,7 @@ const updateEmployee = async(req, res) => {
         const employee = await query(checkEmployee, [inputId], transaction)
         if(employee.length > 0){
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
-            res.send({employee})
+            res.send({employee: req.body})
         }else{
             res.send(404)
         }
