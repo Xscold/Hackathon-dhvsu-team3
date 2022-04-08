@@ -8,9 +8,12 @@ const checkEmployee = "SELECT * FROM employee where id = ?"
 
 const deleteById = "DELETE FROM employee where id = ?"
 
+const updateById = "UPDATE employee SET firstName = ?, lastName = ?, position = ?, sickLeaveCredits = ? , vacationLeaveCredits= ?, hourlyRate = ? where id = ?"
+
 module.exports = {
     saveEmployee,
     selectAll,
     checkEmployee,
-    deleteById
+    deleteById,
+    updateById
 }
