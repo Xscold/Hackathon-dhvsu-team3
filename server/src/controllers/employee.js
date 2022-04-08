@@ -15,14 +15,14 @@ const registEmployees = async(req,res) => {
         //to check if the employee has the same id
         const employee = await query(checkEmployee, [req.body.id], transaction)
         if(employee.length > 0){
-            res.sendStatus(404)
+            return res.sendStatus(404)
         }else{
             //insert employee into the database
             const insert = await query(saveEmployee, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate],transaction)
-            res.send(200).json({employee:req.body})
+            return res.sendStatus(200).json({employee:req.body})
         }
     }catch(err){
-        res.send("error");
+        return res.sendStatus(404);
     }
 }
 
@@ -31,9 +31,9 @@ const listEmployees = async(req, res) => {
     try{
         //to list all employees
         const employee = await query(selectAll, [], transaction)
-        res.send(200).json({employee})
+        return res.sendStatus(200).json({employee})
     }catch{
-        res.send("error");
+        return res.sendStatus(404);
     }
 }
 
@@ -44,17 +44,15 @@ const deleteEmployeeById = async(req, res) => {
             id: inputId
         } = req.params
         //check if there is an employee with this id number
-        
         const employee = await query(checkEmployee, [inputId], transaction)
-        //console.log(employee)
         if(employee.length > 0){
             const deleteEmployee = await query(deleteById, [inputId], transaction)
-            res.send(200).json({employee:employee[0]})
+            return res.sendStatus(200).json({employee:employee[0]})
         }else{
-            res.sendStatus(404)
+            return res.sendStatus(404)
         }
     }catch{
-        res.send("error");
+        return res.sendStatus(404);
     }
 }
 
@@ -72,16 +70,15 @@ const updateEmployee = async(req, res) => {
             vacationLeaveCredits,
             hourlyRate
         } = req.body;
-        console.log(req.body)
         const employee = await query(checkEmployee, [inputId], transaction)
         if(employee.length > 0){
             const updateEmployee = await query(updateById, [firstName, lastName, position, sickLeaveCredits, vacationLeaveCredits, hourlyRate, inputId], transaction)
-            res.send(200).json({employee:req.body})
+            return res.sendStatus(200).json({employee:req.body})
         }else{
-            res.sendStatus(404)
+            return res.sendStatus(404)
         }
-    }catch{
-        res.send("error");
+    }catch(err){
+        return res.sendStatus(303);
     }
 }
 
@@ -93,12 +90,12 @@ const getEmployeeById = async(req, res) => {
         } = req.params
         const employee = await query(checkEmployee, [id], transaction)
         if(employee.length > 0){
-            res.send(200).json({employee:employee[0]})
+            res.sendStatus(200).json({employee:employee[0]})
         }else{
-            res.sendStatus(404)
+            return res.sendStatus(404)
         }
     }catch{
-        res.send("error");
+        return res.sendStatus(404);
     }
 }
 module.exports = {
