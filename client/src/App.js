@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap"
 import Employee from "./components/Employee"
-import axios from "axios"
+import Axios from "axios"
 import "./App.css"
 import { useState, useEffect } from "react"
 
@@ -12,8 +12,8 @@ function App() {
     // Fetch Data
     const fetchEmployee = async () => {
       setLoading(true)
-      const res = await axios.get(
-        "https://3305-xscold-hackathondhvsut-emgtmtdcczy.ws-us38.gitpod.io/api/management/employee"
+      const res = await Axios.get(
+        "https://3305-xscold-hackathondhvsut-308klzbob9d.ws-us38.gitpod.io/api/management/employee"
       )
       setPosts(res.data)
       setLoading(false)
